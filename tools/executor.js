@@ -879,7 +879,9 @@ async function runSafetyChecks(name, args) {
         };
       }
 
-      const minDeploy = Math.max(0.1, config.management.deployAmountSol);
+      // Absolute dust floor only — configured deployAmountSol is the real floor (supports micro wallets).
+      const configuredMin = Number(config.management.deployAmountSol);
+      const minDeploy = Math.max(0.005, Number.isFinite(configuredMin) ? configuredMin : 0.005);
       if (amountY < minDeploy) {
         return {
           pass: false,

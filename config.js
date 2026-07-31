@@ -322,7 +322,8 @@ export function computeDeployAmount(walletSol, volatility = null) {
     }
   }
   const result = Math.min(ceil, Math.max(floor, dynamic));
-  return parseFloat(result.toFixed(2));
+  // 4 decimals so micro wallets (e.g. 0.015 SOL) don't round to 0.02 / 0.00.
+  return parseFloat(result.toFixed(4));
 }
 
 /**
